@@ -26,7 +26,7 @@ class TimeSeriesParams():
         self.dParams['eps'] = 1e-6
         self.dParams['geoMean'] = "Euc" # Geometry to evaluate and optimize the Mean
         self.dParams['geoCov'] = "Wass" # Geometry to evaluate and optimize the Covariance
-        self.dParams['regObs'] = 1
+        self.dParams['regObs'] = 1 # lambda? 
         
         # Gaussian Model Specific Parameters
         self.dParams['cluster_sig'] = 10 # Prior on Wasserstein distance to Cluster center: Gaussian standard deviation 

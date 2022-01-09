@@ -97,6 +97,6 @@ for d in dim:
         X[:,0] = (1-tAll)
         X[:,1] = tAll
             
-        # Save the Data
+        # Save the Data - Save a dictionary of names and arrays into a MATLAB-style .mat file.
         scio.savemat(folderOutput + '/dim_' + str(d) + '_'+str(nI)+ '.mat', mdict={'datM':datM, 'datS':datS, 'X':X, 'mus':mus, 'covs':covs, 'dim':d, 'd1':d1, 'd2':d2})
     

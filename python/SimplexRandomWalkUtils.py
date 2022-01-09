@@ -67,20 +67,20 @@ def GaussWassDistance(mu1, cov1, mu2, cov2):
 def GaussianSample(mu, sig):
     return scistats.multivariate_normal.rvs(mu, sig)
 
-def LogGammaLiklihoodBimodalAB(p,a0,b0,a,b,w,delta):
+def LogGammaLiklihoodBimodalAB(p,a0,b0,a,b,w,delta): #they pass in gamma as delta 
     sp = torch.nn.Softplus(beta=10)
     mini = 1.1
     pDelta=[]
-    for k in range(p.K):
+    for k in range(p.K): #log likelihood of two component beta mixture in EQUATION8. (lgamma is log of gamma function; gamma function appears in pdf of beta distn)
         pDelta.append( torch.log(torch.max(
             w[k]*(torch.exp( (a0[k] -1)*torch.log(delta[:,k]) + (b0[k] -1)*torch.log(1-delta[:,k]) 
             + torch.lgamma(a0[k]+b0[k]) - torch.lgamma(a0[k]) - torch.lgamma(b0[k]) ))
             + (1-w[k])*(torch.exp( (a[k] -1)*torch.log(delta[:,k]) + (b[k] -1)*torch.log(1-delta[:,k]) 
             + torch.lgamma(a[k]+b[k]) - torch.lgamma(a[k]) - torch.lgamma(b[k]) ))
-            , torch.tensor(1e-20))))
+            , torch.tensor(1e-20)))) # append each separate term in the product in equation8
         
     log_pDelta = torch.stack(pDelta)
-    return log_pDelta
+    return log_pDelta #return this in matrix (or array idk) form (terms in equation8 are entries.)
 
 
 def StateEvolutionDynamics(p, x0, pi, delta):
@@ -227,7 +227,7 @@ def label_Init(dat, L):
     return (outM, outSig)
 
 def FitMuSig(dat,K):
-    gmm = GaussianMixture(n_components=K).fit(dat)
+    gmm = GaussianMixture(n_components=K).fit(dat) # from sklearn.mixture import GaussianMixture
     eig=[]
     for i in range(K):
         eig.append(np.linalg.eig(gmm.covariances_[i])[0])

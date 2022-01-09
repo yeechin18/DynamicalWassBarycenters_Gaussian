@@ -7,6 +7,7 @@ import TimeSeriesParams as TSP
 
 def GetDataParameters(dataSet, sel = None):
     p = TSP.TimeSeriesParams()
+    # the following override those in TimeSeriesParams.
     if (dataSet == "BeepTest"):
         params={
             'dataName':'Beep Test' }
@@ -18,14 +19,16 @@ def GetDataParameters(dataSet, sel = None):
         params['stride'] = 25
 #        params['stride'] = 50
 
-        params['cluster_sig'] = 1.0
-        params['alpha'] = 1.1
-        params['beta'] =  3
-        params['regObs'] = 100
-        params['initMethod'] = 'CPD'
+        params['cluster_sig'] = 1.0 #s, variance on prior for Theta, equation10.
 
-        params['cyclicIterMax'] = 1000
-        params['cyclicThresh'] = 0.1
+    
+        params['alpha'] = 1.1 # only gets used if paramtest != 0 
+        params['beta'] =  3 # only gets used if paramtest != 0 
+        params['regObs'] = 100 #lambda
+        params['initMethod'] = 'CPD' #line 166 in code. used in optimisation or something.
+
+        params['cyclicIterMax'] = 1000 #self explanatory. for convergence of cost function to a local min i think
+        params['cyclicThresh'] = 0.1 #Eta in algorithm 1. 
     elif (dataSet == "MSR_Batch"):
         # This data is normalized for its mean and standard deviation.
         params={
@@ -39,9 +42,28 @@ def GetDataParameters(dataSet, sel = None):
 
         params['cluster_sig'] = 1.0 
         
-        params['alpha'] = 1.1
-        params['beta'] =  3
-        params['regObs'] = 100 #10
+        params['alpha'] = 1.1 # only gets used if paramtest != 0 
+        params['beta'] =  3 # only gets used if paramtest != 0 
+        params['regObs'] = 100 #10 #lambda
+        params['initMethod'] = 'CPD'
+
+        params['cyclicIterMax'] = 1000
+        params['cyclicThresh'] = 0.05
+    elif (dataSet == "bookshelf_fft"):
+        params={
+            'dataName':'???'}
+        params['dataFile']='../data/concatenated_fft_tests.txt' #??? set up to read in the right format
+        params['debugFolder'] = "../debug/bookshelf_fft/" #??? why do we need this
+        params['dataVariable'] = 'Y' #???
+# update these.
+        params['window'] = 250
+        params['stride'] = 125
+
+        params['cluster_sig'] = 1.0 
+        
+        params['alpha'] = 1.1 # only gets used if paramtest != 0 
+        params['beta'] =  3 # only gets used if paramtest != 0 
+        params['regObs'] = 100 #10 #lambda
         params['initMethod'] = 'CPD'
 
         params['cyclicIterMax'] = 1000

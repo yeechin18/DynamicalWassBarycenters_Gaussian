@@ -7,6 +7,13 @@ To run the code and replicate the results reported in our paper,
 ```python
 # usage: DynamicalWassersteinBarycenters.py dataSet dataFile debugFolder interpModel [--ParamTest PARAMTEST] [--lambda LAM] [--s S]
 
+#dataset: name the dataset you're using so that we know which hyperparameters to use from datasetparameters
+#interpmodel: `geoCov` in code; Choices are 'Wass' or 'GMM'. see line 53, line 254, dynamicalwassersteinbarycentres.py.
+#lambda: weight on data fit term (equation 9) / penalty term in cost function. only specify if paramtest==1 else not used.
+#s: variance on prior distribution for Theta. only specify if paramtest==1 else not used.
+#paramtest: probably not relevant for us but see line 112, and initialisation of parameters in line 148, paramtest means alpha and beta are as specified in dsp. also, values for lambda and s passed in are used (override the ones in dsp)
+
+
 # Sample run on MSR data                                         
 >> python DynamicalWassersteinBarycenters.py MSR_Batch ../Data/MSR_Data/subj090_1.mat ../debug/MSR/subj001_1.mat Wass 
 
@@ -21,6 +28,7 @@ The ``interpMethod`` is either ``Wass` for the Wasserstein barycentric model or 
 
 The simulated data and experiment included in this supplement can be replicated using using the following commands.
 ```python
+# i think this is wrt optimisation or something, sec 9.1
 # Generate 2 and 3 state simulated data                                         
 >> python GenerateOptimizationExperimentData.py
 >> python GenerateOptimizationExperimentData_3K.py
