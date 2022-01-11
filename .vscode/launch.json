@@ -1,0 +1,26 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Python: Current File bookshelf fft short",
+            "type": "python",
+            "request": "launch",
+            "program": "${file}",
+            "args" : ["bookshelf_fft_short", "../data/bookshelf_concatenated_fft_tests_short.mat", "../debug/bookshelf_fft_short/", "Wass"],
+            "console": "integratedTerminal",
+            "cwd": "${fileDirname}"
+        },
+        {
+            "name": "Python: Current File bookshelf fft",
+            "type": "python",
+            "request": "launch",
+            "program": "${file}",
+            "args" : ["bookshelf_fft", "../data/bookshelf_concatenated_fft_tests.mat", "../debug/bookshelf_fft/", "Wass"],
+            "console": "integratedTerminal",
+            "cwd": "${fileDirname}"
+        }
+    ]
+}

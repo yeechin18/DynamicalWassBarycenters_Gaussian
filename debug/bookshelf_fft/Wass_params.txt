@@ -1,0 +1,33 @@
+Parameter Dump
+  logFile: 	None
+  paramFile: 	Wass_params.txt
+  debugFolder: 	../debug/bookshelf_fft/
+  outputFile: 	out.mat
+  dataName: 	bookshelf fft
+  dataFile: 	../data/bookshelf_concatenated_fft_tests.mat
+  dataVariable: 	Y
+  initMethod: 	CPD
+  inputType: 	Sample
+  alpha: 	1.1
+  beta: 	3
+  window: 	800
+  stride: 	800
+  offset: 	0
+  eps: 	1e-06
+  geoMean: 	Euc
+  geoCov: 	Wass
+  regObs: 	100
+  cluster_sig: 	1.0
+  nOptimStep: 	50000
+  lr_Gamma: 	0.002
+  lr_Cluster: 	0.1
+  nCyclic: 	200
+  printInterval: 	500
+  cyclicThresh: 	0.05
+  cyclicIterMax: 	1000
+  optimMethod_Cluster: 	LineSearch
+  cyclic_MuSig: 	True
+  T: 	8
+  dim: 	1
+  K: 	3
+ 

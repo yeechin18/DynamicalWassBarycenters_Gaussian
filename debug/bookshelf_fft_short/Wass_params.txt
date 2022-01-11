@@ -1,17 +1,17 @@
 Parameter Dump
   logFile: 	None
   paramFile: 	Wass_params.txt
-  debugFolder: 	../debug/MSR/subj001_1.mat
+  debugFolder: 	../debug/bookshelf_fft_short/
   outputFile: 	out.mat
-  dataName: 	MSR
-  dataFile: 	../Data/MSR_Data/subj090_1.mat
+  dataName: 	bookshelf fft short with healthy and damaged only
+  dataFile: 	../data/bookshelf_concatenated_fft_tests_short.mat
   dataVariable: 	Y
   initMethod: 	CPD
   inputType: 	Sample
   alpha: 	1.1
   beta: 	3
-  window: 	250
-  stride: 	125
+  window: 	800
+  stride: 	800
   offset: 	0
   eps: 	1e-06
   geoMean: 	Euc
@@ -23,11 +23,11 @@ Parameter Dump
   lr_Cluster: 	0.1
   nCyclic: 	200
   printInterval: 	500
-  cyclicThresh: 	0.05
+  cyclicThresh: 	0.1
   cyclicIterMax: 	1000
   optimMethod_Cluster: 	LineSearch
   cyclic_MuSig: 	True
-  T: 	119
-  dim: 	3
-  K: 	7
+  T: 	3
+  dim: 	1
+  K: 	2
  

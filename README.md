@@ -15,7 +15,7 @@ To run the code and replicate the results reported in our paper,
 
 
 # Sample run on MSR data                                         
->> python DynamicalWassersteinBarycenters.py MSR_Batch ../Data/MSR_Data/subj090_1.mat ../debug/MSR/subj001_1.mat Wass 
+>> python DynamicalWassersteinBarycenters.py MSR_Batch ../Data/MSR_Data/subj090_1.mat ../debug/MSR/subj001_1.mat Wass
 
 # Sample run for parameter test
 >> python DynamicalWassersteinBarycenters.py MSR_Batch ../Data/MSR_Data/subj090_1.mat ../debug/ParamTest/subj001_1.mat Wass --ParamTest 1 --lambda 100 --s 1.0
@@ -40,6 +40,34 @@ The simulated data and experiment included in this supplement can be replicated 
 ```
 
 The ``Mode`` is either ``WB`` for Wasserstein-Bures geometry and ``Euc`` for Euclidean geometry using Cholesky decomposition parameterization.
+
+## Steps for applying to a new dataset
+
+Useful links
+https://docs.scipy.org/doc/scipy/reference/generated/scipy.io.savemat.html
+
+Data format: matlab (`.mat`) file. Store the time series data with first dimension representing time and second dimension for the dimensions of the time series (if there is more than one), into a variable with name `Y` (or whatever you please). See `python_to_mat.ipynb` notebook in Data for a notebook that converts a list to the correct matlab format.
+
+There is no need in the matlab file for a `K` variable (program will take the value from DataSetParameters.py) or `L` variable (We are using `params['initMethod'] = 'CPD'` not `'Label'` but to prevent errors a default value of 5 has been added to the main python file).
+
+Update DataSetParameters.py with desired model parameters and hyperparameters (see DWB Codebase pdf). (Other parameters are inherited from but not overridden by TimeSeriesParams.)
+Also update `'datafile'` to the local path containing data in `.mat` form, `'debugFolder'` to desired destination for ..., and `'dataVariable'` to the name of the matlab variable (`'Y'` or whatever chosen) containing the time series data.
+
+The main call overrides parameters specified in DataSetParameters, which override parameters specified in TimeSeriesParams.
+
+sample main calls 
+```python
+# usage: DynamicalWassersteinBarycenters.py dataSet dataFile debugFolder interpModel [--ParamTest PARAMTEST] [--lambda LAM] [--s S]
+# call to run on bookshelf fft data                                         
+>> python DynamicalWassersteinBarycenters.py bookshelf_fft ../data/bookshelf_concatenated_fft_tests.mat ../debug/bookshelf_fft/ Wass 
+```
+
+```python
+# usage: DynamicalWassersteinBarycenters.py dataSet dataFile debugFolder interpModel [--ParamTest PARAMTEST] [--lambda LAM] [--s S]
+# call to run on shorter bookshelf fft data                                         
+>> python DynamicalWassersteinBarycenters.py bookshelf_fft_short ../data/bookshelf_concatenated_fft_tests_short.mat ../debug/bookshelf_fft_short/ Wass
+```
+
 
 ## Requirements
 ```

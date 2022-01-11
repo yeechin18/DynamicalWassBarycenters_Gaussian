@@ -36,7 +36,7 @@ class TimeSeriesParams():
         self.dParams['lr_Gamma'] = 2e-3
         self.dParams['lr_Cluster'] = 1e-1
         self.dParams['nCyclic'] = 200
-        self.dParams['printInterval'] = 500
+        self.dParams['printInterval'] = 500 #so 100 times in nOptimStep we do something
         self.dParams['cyclicThresh'] = 1
         self.dParams['cyclicIterMax'] = 1000
         self.dParams['optimMethod_Cluster'] = "LineSearch"
@@ -48,8 +48,8 @@ class TimeSeriesParams():
         self.dParams['K'] = 0
         
         # Update and Save
-        self.update(params)
-        self.save()
+        self.update(params) # override defaults with any keys specified in creating this instance
+        self.save() # make these into actual attributes of the object, not just inside dParams.
         
     def save(self):
         # Store parameters"
@@ -105,7 +105,7 @@ class TimeSeriesParams():
         # Update based on inputs
         for k in params.keys():
             self.dParams[k] = params[k]
-        self.save()
+        self.save() # again turn them into actual attributes of the object
 
         
     def write(self, f=sys.stdout):
