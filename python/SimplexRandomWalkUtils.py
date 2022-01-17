@@ -175,7 +175,7 @@ def CPD_WM1(dat,win):
     cpd = np.zeros((dim,L))
     for d in range(dim):
         for i in range(win,L-win):
-            cpd[d,i] = otcpd.Compute1dOtDistance(dat[i-win:i], dat[i:i+win])
+            cpd[d,i] = otcpd.Compute1dOtDistance(dat[i-win:i], dat[i:i+win]) #from OtSingleDimStatLib.py - compute ot dist between adjacent windows in the data 
             
         cpd[d] = scisig.convolve(cpd[d], filt, 'same')
     return np.mean(cpd,0) 
@@ -227,7 +227,7 @@ def label_Init(dat, L):
     return (outM, outSig)
 
 def FitMuSig(dat,K):
-    gmm = GaussianMixture(n_components=K).fit(dat) # from sklearn.mixture import GaussianMixture
+    gmm = GaussianMixture(n_components=K).fit(dat) # from sklearn.mixture import GaussianMixture #code just ends at this point or some time during the execution of this
     eig=[]
     for i in range(K):
         eig.append(np.linalg.eig(gmm.covariances_[i])[0])

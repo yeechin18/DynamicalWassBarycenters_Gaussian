@@ -146,7 +146,7 @@ if __name__=="__main__":
         dataSet = 'MSR_Batch'
         p = dsp.GetDataParameters(dataSet)
     
-    datO = scio.loadmat(p.dataFile)[p.dataVariable].astype(float) # often dataVariable is 'Y'. 
+    datO = scio.loadmat(p.dataFile)[p.dataVariable].astype(float) # often dataVariable is 'Y'.  # check dat0 shape after importing 
     dat = util.WindowData(datO, p.window, p.stride, p.offset)
     (T, dump, dim) = dat.shape
 
@@ -167,8 +167,8 @@ if __name__=="__main__":
     
     # Initialize Model Parameters. 
     print('Initialising model parameters')
-    gamma = torch.tensor(np.zeros((p.T,p.K))+p.eps, dtype = dtype, requires_grad=True)
-    if (ParamTest==0):
+    gamma = torch.tensor(np.zeros((p.T,p.K))+p.eps, dtype = dtype, requires_grad=True) #takes barely any time. debug fine up to here on bookshelffftshort
+    if (ParamTest==0): #this block happens instantly
         x0 = torch.tensor(np.ones(p.K)/p.K, dtype = dtype, requires_grad=True)
         A_Beta = torch.tensor(np.ones(p.K)*10, dtype = dtype, requires_grad=True)
         B_Beta = torch.tensor(np.ones(p.K)*20, dtype = dtype, requires_grad=True)
@@ -184,7 +184,7 @@ if __name__=="__main__":
         w_Beta = torch.tensor(np.ones(p.K)*0.5, dtype=dtype, requires_grad=True)
         
     meanDat = np.mean(datO, axis=0)
-    stdDat = np.std(datO,axis=0)
+    stdDat = np.std(datO,axis=0) #happens instantly
 
     # used in optimisation or something. just leave same as the other datasets.
     if (p.initMethod == 'CPD'): # initialize based on K CPD Fit. 
@@ -204,6 +204,7 @@ if __name__=="__main__":
     # reference gaussian params after equation10. becomes p.muPrior and p.covPrior. gets passed to TimeSeriesCost for caluclating loss.
     # I guess it makes sense for this to be the reference gaussian - prior on Theta is fitted to the data.
     (muP, sigP) = util.FitMuSig(datO, p.K) # Regularize based on distance to (mean of gmm parameters, average eValue of gmm Covariances) # P for Prior
+    print('Am I ever reached? ')
     covDat = dwl.CovarianceBarycenter(torch.tensor(sigO, dtype=dtype), torch.ones(p.K)/p.K, torch.eye(p.dim), nIter=10).detach().numpy()
 
     p.muPrior=torch.tensor(muP, dtype=dtype, requires_grad=False)

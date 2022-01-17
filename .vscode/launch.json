@@ -11,7 +11,8 @@
             "program": "${file}",
             "args" : ["bookshelf_fft_short", "../data/bookshelf_concatenated_fft_tests_short.mat", "../debug/bookshelf_fft_short/", "Wass"],
             "console": "integratedTerminal",
-            "cwd": "${fileDirname}"
+            "cwd": "${fileDirname}",
+            "justMyCode": false
         },
         {
             "name": "Python: Current File bookshelf fft",
