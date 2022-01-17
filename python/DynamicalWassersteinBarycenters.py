@@ -204,7 +204,7 @@ if __name__=="__main__":
     # reference gaussian params after equation10. becomes p.muPrior and p.covPrior. gets passed to TimeSeriesCost for caluclating loss.
     # I guess it makes sense for this to be the reference gaussian - prior on Theta is fitted to the data.
     (muP, sigP) = util.FitMuSig(datO, p.K) # Regularize based on distance to (mean of gmm parameters, average eValue of gmm Covariances) # P for Prior
-    print('Am I ever reached? ')
+    print('Am I ever reached? finished fitting gaussian mixture')
     covDat = dwl.CovarianceBarycenter(torch.tensor(sigO, dtype=dtype), torch.ones(p.K)/p.K, torch.eye(p.dim), nIter=10).detach().numpy()
 
     p.muPrior=torch.tensor(muP, dtype=dtype, requires_grad=False)
@@ -261,12 +261,16 @@ if __name__=="__main__":
     evalHistory=[]
     cyclicPoints=[]
     # Start Optimization 
+    time_now = time.time()
+    print(f'Time Taken since start: {time_now-time_start:.2f}s')
     print('Beginning optimisation')
     for t in range(p.nOptimStep): # 50,000 according to tsp.py
         # Since the monte carlo simulations for GMM evaluation takes a long time, set a flag to indicate we are running debug
         # I should run the code in vscode and actually view this lol
-        if (t % p.printInterval == 0): 
-            print('Making progress... done 100 steps')
+        if (t % p.printInterval*5 == 0): 
+            time_now = time.time()
+            print(f'Time Taken since start: {time_now-time_start:.2f}s')
+            print('Making progress... done 500 steps')
             costFunc.computeEval = 1
             (lossFunc, X2, obsCost, log_pGamma, log_pTheta, cov, obsEval) = costFunc.cost(gamma, x0, mu, covP, A_Beta0, B_Beta0, A_Beta, B_Beta, w_Beta)
             evalHistory.append(np.sum(obsEval))
